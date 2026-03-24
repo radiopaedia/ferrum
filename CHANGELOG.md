@@ -9,7 +9,7 @@
 ### Removed
 
 
-## [Unreleased](https://github.com/rubycdp/ferrum/compare/v0.17.1...v0.17.2) (March 23, 2026) ##
+## [0.17.2](https://github.com/rubycdp/ferrum/compare/v0.17.1...v0.17.2) (March 23, 2026) ##
 
 ### Added
 - `Ferrum::Network::Response#body!` returns body or throws error if implicable
