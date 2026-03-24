@@ -184,20 +184,34 @@ module Ferrum
       halt(204)
     end
 
+    get "/with_ajax_connection_refused" do
+      port = closed_port
+      render_view :with_ajax_connection_refused, closed_port: port
+    end
+
     get "/:view" do |view|
       render_view view
     end
 
     protected
 
-    def render_view(view)
-      erb File.read("#{FERRUM_VIEWS}/#{view}.erb")
+    def render_view(view, locals = {})
+      erb File.read("#{FERRUM_VIEWS}/#{view}.erb"), locals: locals
     end
 
     def set_stealth_cookie
       cookie_value = "test_cookie"
       response.set_cookie("stealth", cookie_value)
       "Cookie set to #{cookie_value}"
+    end
+
+    private
+
+    def closed_port
+      server = TCPServer.new("127.0.0.1", 0)
+      server.addr[1]
+    ensure
+      server.close
     end
   end
 end
