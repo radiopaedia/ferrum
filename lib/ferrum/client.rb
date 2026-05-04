@@ -66,6 +66,7 @@ module Ferrum
 
     attr_reader :ws_url, :options, :subscriber
     attr_accessor :on_synchronous_message
+
     def initialize(ws_url, options)
       @command_id = 0
       @ws_url = ws_url
@@ -97,9 +98,7 @@ module Ferrum
         raise TimeoutError unless data
 
         error, response = data.values_at("error", "result")
-        if on_synchronous_message
-          on_synchronous_message.call(message:, error:, response:)
-        end
+        on_synchronous_message&.call(message:, error:, response:)
         raise_browser_error(error) if error
         response
       end
